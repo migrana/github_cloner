@@ -5,5 +5,4 @@ How it Works
     * Account Settings > Applications > Personal Access Tokens (Needs to be able to read public/private repos and maybe notifications)
     * Save it to a .token file
 
-*  The code is set to use my account, change it to use someone elses to match above token
-* run 
+* run clone_github_org_repos.sh, it will save to a subdir in this repo that is ignored by the above git repo. or change the path to somewhere else
