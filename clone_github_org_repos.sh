@@ -4,17 +4,21 @@ set -e
 set -u
 set -x
 
+source $(dirname $0)/.settings
+
 GITHUB_API_BASE="api.github.com"
 GITHUB_BASE="github.com"
-TOKEN=$(cat .token)
-CLONE_DIR="$(dirname $0)/clone_dir"
+GITHUB_SSH_USER="git"
 
 clone() {
 
+    export PKEY=$SSH_KEY
+
     url=$1
-    org=$(echo $url | perl -ne 'm|([^/]+)/([^/]+\.git)| && print "$1\n"')
-    repo=$(echo $url | perl -ne 'm|([^/]+)/([^/]+\.git)| && print "$2\n"')
+    org=$(echo $url | perl -ne 'm|([^/]+)/([^/]+)\.git| && print "$1\n"')
+    repo=$(echo $url | perl -ne 'm|([^/]+)/([^/]+)\.git| && print "$2\n"')
     cwd=$(pwd)
+    
 
     [ -d "${CLONE_DIR}/${org}" ] ||  mkdir "${CLONE_DIR}/${org}"
 
@@ -22,10 +26,10 @@ clone() {
     then
         cd "${CLONE_DIR}/${org}/${repo}"
         git fetch --all 1>/dev/null
-        git pull --all  1>/dev/null
+        git  pull --all  1>/dev/null
     else
         cd "${CLONE_DIR}/${org}"
-        git clone $url
+        git clone ${GITHUB_SSH_USER}@${GITHUB_BASE}:${org}/$repo.git 
     fi
 
     cd $cwd
@@ -37,7 +41,6 @@ then
     exit 1
 fi 
 
-CLONE_DIR="$(dirname $0)/clone_dir"
 [ -d "$CLONE_DIR" ] || mkdir $CLONE_DIR
 
 

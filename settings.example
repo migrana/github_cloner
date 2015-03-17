@@ -1,0 +1,3 @@
+TOKEN=$(cat /srv/github_cloner/.token)
+CLONE_DIR="/srv/github_cloner"
+SSH_KEY="/srv/github_cloner/.ssh/githubauto"
