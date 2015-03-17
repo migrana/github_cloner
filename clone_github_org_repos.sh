@@ -34,10 +34,11 @@ clone() {
 if [ "$#" == 0 ]
 then
     echo "USAGE: $0 Org1 Org2 Org3....OrgN"
+    exit 1
 fi 
 
 CLONE_DIR="$(dirname $0)/clone_dir"
-[ -d "CLONE_DIR" ] || mkdir $CLONE_DIR
+[ -d "$CLONE_DIR" ] || mkdir $CLONE_DIR
 
 
 for org_name in $@
